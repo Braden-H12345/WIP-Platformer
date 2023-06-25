@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isFacingRight = true;
     private Rigidbody2D _rb;
     private bool _allowJump = false;
+    private SpriteRenderer _spriteRender;
 
 
     public float _speedScaling = 8f;
@@ -16,10 +17,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundCheckLayer;
+    [SerializeField] private Transform _cameraTransform;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRender = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -30,14 +33,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _horizontal = Input.GetAxisRaw("Horizontal");
+        _horizontal = 0f;
 
-        if(Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetKey(KeyCode.A))
+        {
+            _horizontal = -1f;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            _horizontal = 1f;
+        }
+
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             _allowJump = true;
         }
 
         Flip();
+
     }
 
     private void FixedUpdate()
@@ -58,12 +72,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        if (_isFacingRight && _horizontal < 0f || !_isFacingRight && _horizontal > 0f)
+        if (_rb.velocity.x > 0)
         {
-            _isFacingRight = !_isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            _spriteRender.flipX = false;
+        }
+        else if(_rb.velocity.x == 0)
+        {
+            //does nothing to keep the direction whatever it was before!
+        }
+        else
+        {
+            _spriteRender.flipX = true;
         }
     }
 }

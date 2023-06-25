@@ -266,7 +266,7 @@ Transform:
   - {fileID: 182238377}
   - {fileID: 705314016}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -321,7 +322,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -349,9 +350,25 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 1722342345}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01edf9d103601344185dca084359a841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1722342345}
+  maxOffsetX: 8
+  maxOffsetY: 3
+  speedToMove: 4
 --- !u!1 &606287791
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606287791}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.15, y: 0, z: 0}
+  m_LocalPosition: {x: 14.48, y: 0, z: 0}
   m_LocalScale: {x: 7.2121873, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -489,7 +506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705314015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.1, y: 0.94, z: 0}
   m_LocalScale: {x: 7.2121873, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,8 +754,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1632236312}
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1722342346
 MonoBehaviour:
@@ -752,9 +770,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee704a59ea2124f8257fb601a4590b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedScaling: 8
-  _jumpScaling: 16
+  _speedScaling: 9
+  _jumpScaling: 13
   _groundCheck: {fileID: 1632236312}
   _groundCheckLayer:
     serializedVersion: 2
     m_Bits: 64
+  _cameraTransform: {fileID: 519420032}
