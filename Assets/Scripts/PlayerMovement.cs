@@ -6,14 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private float _horizontal;
+    private float _vertical;
     private bool _isFacingRight = true;
     private Rigidbody2D _rb;
-    private bool _allowJump = false;
     private SpriteRenderer _spriteRender;
 
 
     public float _speedScaling = 8f;
-    public float _jumpScaling = 16f;
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundCheckLayer;
@@ -34,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _horizontal = 0f;
+        _vertical = 0f;
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -43,12 +43,16 @@ public class PlayerMovement : MonoBehaviour
         {
             _horizontal = 1f;
         }
-
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+         if (Input.GetKey(KeyCode.W))
         {
-            _allowJump = true;
+            _vertical = 1f;
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            _vertical = -1f;
+        }
+
+
 
         Flip();
 
@@ -56,18 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.velocity = new Vector2(_horizontal * _speedScaling, _rb.velocity.y);
-
-        if(_allowJump)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpScaling);
-            _allowJump=false;
-        }
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _groundCheckLayer);
+        _rb.velocity = new Vector2(_horizontal * _speedScaling, _vertical * _speedScaling);
     }
 
     private void Flip()
