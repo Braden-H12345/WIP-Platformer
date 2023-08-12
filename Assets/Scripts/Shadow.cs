@@ -10,12 +10,14 @@ public class Shadow : MonoBehaviour
     private bool _teleportState = false;
     private bool _canTeleport = true;
     private bool _beginUpdating;
+    private float _cooldownStart = 0;
     [SerializeField] GameObject player;
+    [SerializeField] GameObject _visuals;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _visuals.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,13 +32,13 @@ public class Shadow : MonoBehaviour
     void FixedUpdate()
     {
 
-        Debug.Log( posArray.Length);
         posArray[_arrayIndex] = new Vector2(player.transform.position.x, player.transform.position.y);
         _arrayIndex++;
 
 
         if(_arrayIndex == 200)
         {
+            _visuals.SetActive(true);
             _arrayIndex = 0;
             _beginUpdating = true;
         }
@@ -51,13 +53,15 @@ public class Shadow : MonoBehaviour
             player.transform.position = posArray[_arrayIndex]; // should be 4 seconds ago even if iterated again
             _teleportState = false;
             _arrayIndex = 0;
+            _canTeleport = false;
+            _cooldownStart = Time.fixedTime;
             HideVisuals();
         }
     }
 
     void HideVisuals()
     {
-        _canTeleport = false;
-
+        _visuals.SetActive(false);
+        Debug.Log(_cooldownStart);
     }
 }
